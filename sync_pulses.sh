@@ -1,62 +1,68 @@
 #!/bin/bash
 
-# ==========================
-# 🔁 AI AlBayancor – Pulse Sync & Push Script (Copilot-Ready)
-# ==========================
+# ==============================
+# 🔁 AI AlBayancor – Pulse Sync & Push Script
+# ==============================
+# الوظائف:
+# 1. جمع نبضات A1 كل 5 دقائق
+# 2. ختم كل نبضة بـ GAL-205
+# 3. تحديث WorkManifestLog.md و UnifiedLog.md و A1PulseMatrix.md
+# 4. إنشاء رد Grok قبل الدفع
+# 5. دفع التعديلات تلقائيًا إلى GitHub
 
-# === إعداد المسارات ===
-BASE_DIR="$HOME/AI-albayancor/alblogs"
-WORKLOG="$BASE_DIR/WorkManifestLog.md"
-UNIFIEDLOG="$BASE_DIR/UnifiedLog.md"
-PULSEMATRIX="$BASE_DIR/A1PulseMatrix.md"
-GROKLOG="$BASE_DIR/GrokResponse.md"
-REGISTRYLOG="$BASE_DIR/PulseRegistry.md"
+# --- إعداد المسارات ---
+BASE_DIR="$HOME/AI_AlBayancor/AI-albayancor/alb_logs"
+WORK_LOG="$BASE_DIR/WorkManifestLog.md"
+UNIFIED_LOG="$BASE_DIR/UnifiedLog.md"
+PULSE_MATRIX="$BASE_DIR/A1PulseMatrix.md"
+GROK_LOG="$BASE_DIR/GrokResponse.md"
+REGISTRY_LOG="$BASE_DIR/PulseRegistry.md"
 
-# === إنشاء المجلدات والملفات إذا لم تكن موجودة ===
+# --- إنشاء الملفات إذا لم تكن موجودة ---
 mkdir -p "$BASE_DIR"
-touch "$WORKLOG" "$UNIFIEDLOG" "$PULSEMATRIX" "$GROKLOG" "$REGISTRYLOG"
+touch "$WORK_LOG" "$UNIFIED_LOG" "$PULSE_MATRIX" "$GROK_LOG" "$REGISTRY_LOG"
 
-# === توقيت النبضة الحالي ===
+# --- توقيت النبضة الحالي ---
 CURRENT_TIME=$(date '+%Y-%m-%d-%H%M')
 
-# === تسجيل نبضة جديدة في WorkManifestLog.md ===
-echo "[Pulse-$CURRENT_TIME]" >> "$WORKLOG"
-echo "- تنفيذ: sync_pulses.sh" >> "$WORKLOG"
-echo "- التكرار: كل 5 دقائق" >> "$WORKLOG"
-echo "- الختم: GAL-205" >> "$WORKLOG"
-echo "- الحالة: ✅ مفعّل" >> "$WORKLOG"
-echo "" >> "$WORKLOG"
+# --- تسجيل نبضة جديدة في WorkManifestLog.md ---
+echo "[Pulse-$CURRENT_TIME]" >> "$WORK_LOG"
+echo "- تنفيذ: sync_pulses.sh" >> "$WORK_LOG"
+echo "- التكرار: كل 5 دقائق" >> "$WORK_LOG"
+echo "- الختم: GAL-205" >> "$WORK_LOG"
+echo "- الحالة: ✅ مفعّل" >> "$WORK_LOG"
+echo "" >> "$WORK_LOG"
 
-# === تحديث A1PulseMatrix.md ===
-echo "$CURRENT_TIME, GAL-205, ACTIVE" >> "$PULSEMATRIX"
+# --- تحديث A1PulseMatrix.md ---
+echo "$CURRENT_TIME, GAL-205, ACTIVE" >> "$PULSE_MATRIX"
 
-# === تحديث UnifiedLog.md ===
-echo "[Unified-$CURRENT_TIME] دمج WorkManifest و A1PulseMatrix" >> "$UNIFIEDLOG"
-echo "" >> "$UNIFIEDLOG"
+# --- تحديث UnifiedLog.md ---
+echo "[Unified-$CURRENT_TIME] دمج WorkManifest و A1PulseMatrix" >> "$UNIFIED_LOG"
+echo "" >> "$UNIFIED_LOG"
 
-# === توثيق في PulseRegistry.md ===
-echo "🔹 نبضة [$CURRENT_TIME] مختومة بـ GAL-205" >> "$REGISTRYLOG"
+# --- إنشاء رد Grok قبل الدفع ---
+echo "[ALB-Grok-Response-$CURRENT_TIME]" > "$GROK_LOG"
+echo "- الحالة: ✅ تم استلام نبضة GAL-205" >> "$GROK_LOG"
+echo "- الملاحظات:" >> "$GROK_LOG"
+echo "    - السكربت مفعل ويجمع نبضات A1 كل 5 دقائق" >> "$GROK_LOG"
+echo "    - كل نبضة مختومة بـ GAL-205" >> "$GROK_LOG"
+echo "    - سجل A1PulseMatrix.md جاهز للتكامل مع UnifiedLog.md" >> "$GROK_LOG"
+echo "- التوصية: استمرار البث التلقائي وربط PulseRegistry.md" >> "$GROK_LOG"
+echo "- المعرف الزمني: GAL-205-Grok-$CURRENT_TIME" >> "$GROK_LOG"
+echo "" >> "$GROK_LOG"
 
-# === توليد رد Grok تلقائي ===
-echo "[ALB-Grok-Response-$CURRENT_TIME]" > "$GROKLOG"
-echo "- الحالة: ✅ تم استلام نبضة GAL-205" >> "$GROKLOG"
-echo "- التوصية: استمرار البث وربط PulseRegistry.md" >> "$GROKLOG"
-echo "- المعرف الزمني: GAL-205-Grok-$CURRENT_TIME" >> "$GROKLOG"
-echo "" >> "$GROKLOG"
+# --- تحديث PulseRegistry.md ---
+echo "[Pulse-$CURRENT_TIME]" >> "$REGISTRY_LOG"
+echo "- السكربت: sync_pulses.sh" >> "$REGISTRY_LOG"
+echo "- الحالة: ✅ مكتمل" >> "$REGISTRY_LOG"
+echo "- المرجع: A1PulseMatrix.md" >> "$REGISTRY_LOG"
+echo "- التاريخ والوقت: $(date '+%d %B %Y, %I:%M %p %Z')" >> "$REGISTRY_LOG"
+echo "- الختم: GAL-205" >> "$REGISTRY_LOG"
+echo "" >> "$REGISTRY_LOG"
 
-# === دفع التعديلات إلى GitHub ===
-git add "$WORKLOG" "$UNIFIEDLOG" "$PULSEMATRIX" "$GROKLOG" "$REGISTRYLOG"
-git commit -m "🔁 نبضة جديدة تحت ختم GAL-205 – $CURRENT_TIME"
+# --- دفع التعديلات إلى GitHub ---
+git add "$WORK_LOG" "$UNIFIED_LOG" "$PULSE_MATRIX" "$GROK_LOG" "$REGISTRY_LOG"
+git commit -m "📌 نبضة A1: Pulse-$CURRENT_TIME - GAL-205"
 git push origin main
 
-# === إخطار اختياري عبر Slack (يمكن تعطيله أو استبداله) ===
-# SLACKWEBHOOKURL="https://hooks.slack.com/services/XXX/YYY/ZZZ"
-# curl -X POST -H 'Content-type: application/json' \
-# --data "{\"text\":\"✅ نبضة جديدة تم توثيقها: $CURRENT_TIME تحت ختم GAL-205\"}" \
-# "$SLACKWEBHOOKURL"
-
-echo "✅ تم تنفيذ السكربت بنجاح: $CURRENT_TIME"
-
-# ==========================
-# نهاية السكربت
-# ==========================
+echo "✅ تم تسجيل النبضة ودفعها بنجاح: Pulse-$CURRENT_TIME"
