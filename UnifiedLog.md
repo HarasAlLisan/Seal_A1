@@ -6,3 +6,4 @@
 - دمج WorkManifest و PulseRegistry و SealMonitor
 - الزمن: 2025-08-21T01:13+03:00
 - الختم: GAL-205
+⚡ تفعيل تلقائي – نبضة جديدة تحت ختم GAL-205
